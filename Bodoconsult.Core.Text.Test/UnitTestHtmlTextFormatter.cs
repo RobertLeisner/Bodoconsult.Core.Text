@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.IO;
 using Bodoconsult.Core.Text.Formatter;
 using Bodoconsult.Core.Text.Model;
 using Bodoconsult.Core.Text.Test.Helpers;
@@ -289,6 +290,27 @@ namespace Bodoconsult.Core.Text.Test
             sr.AddHeader1("Überschrift 1");
             sr.AddParagraph(MassText);
             sr.AddParagraph(MassText);
+
+            var f = new HtmlTextFormatter
+            {
+                StructuredText = sr,
+                Template = "<<<Start>>>{0}<<<Ende>>>",
+                AddTableOfContent = true
+            };
+            var result = f.GetFormattedText();
+
+            Debug.Print(result);
+            Assert.IsTrue(!string.IsNullOrEmpty(result));
+
+        }
+
+
+        [Test]
+        public void RealLifeGetFormattedText()
+        {
+            var fileName = Path.Combine(FileHelper.TestDataPath, "StructuredText.json");
+
+            var sr = JsonHelper.LoadJsonFile<StructuredText>(fileName);
 
             var f = new HtmlTextFormatter
             {

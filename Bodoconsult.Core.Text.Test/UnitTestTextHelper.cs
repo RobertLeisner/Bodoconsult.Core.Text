@@ -90,7 +90,7 @@ namespace Bodoconsult.Core.Text.Test
         public void TestAppendUtf8PlainTextFile_Html()
         {
 
-            var fileName = Path.Combine(FileHelper.GetAppPath(), "Resources\\HelpFile.txt");
+            var fileName = Path.Combine(FileHelper.AppPath, "Resources\\HelpFile.txt");
 
             var sr = new StructuredText();
             sr.AddHeader1("Überschrift 1");
@@ -123,7 +123,7 @@ namespace Bodoconsult.Core.Text.Test
         public void TestAppendUtf8PlainTextFile_Text()
         {
 
-            var fileName = Path.Combine(FileHelper.GetAppPath(), "Resources\\HelpFile.txt");
+            var fileName = Path.Combine(FileHelper.AppPath, "Resources\\HelpFile.txt");
 
             var sr = new StructuredText();
             sr.AddHeader1("Überschrift 1");

@@ -22,7 +22,7 @@ namespace Bodoconsult.Core.Text.Formatter
 
         private int _rowCount;
 
-#endregion
+        #endregion
 
         /// <summary>
         /// Default ctor
@@ -211,7 +211,7 @@ namespace Bodoconsult.Core.Text.Formatter
 
             TextItems.Add(new TextItem
             {
-                Content = TocCaption, 
+                Content = TocCaption,
                 LogicalType = TextItemType.H1
             });
 
@@ -256,7 +256,7 @@ namespace Bodoconsult.Core.Text.Formatter
                             TextItems.Add(new TextItem
                             {
                                 Content = string.Format("<p class=\"{2}\"><a href=\"#H{1}\">{0}</a></p>\r\n",
-                                ti.Content, row+_rowCount+1,
+                                ti.Content, row + _rowCount + 1,
                                 CssToc1),
                                 LogicalType = TextItemType.Plain
                             });
@@ -268,7 +268,7 @@ namespace Bodoconsult.Core.Text.Formatter
                         if (TocLevel > 1) TextItems.Add(new TextItem
                         {
                             Content = string.Format("<p class=\"{2}\"><a href=\"#H{1}\">{0}</a></p>\r\n",
-                            ti.Content, row + _rowCount+1,
+                            ti.Content, row + _rowCount + 1,
                             CssToc2),
                             LogicalType = TextItemType.Plain
                         });
@@ -277,7 +277,7 @@ namespace Bodoconsult.Core.Text.Formatter
                         if (TocLevel > 2) TextItems.Add(new TextItem
                         {
                             Content = string.Format("<p class=\"{2}\"><a href=\"#H{1}\">{0}</a></p>\r\n",
-                            ti.Content, row+_rowCount+1,
+                            ti.Content, row + _rowCount + 1,
                             CssToc3),
                             LogicalType = TextItemType.Plain
                         });
@@ -286,7 +286,7 @@ namespace Bodoconsult.Core.Text.Formatter
                         if (TocLevel > 3) TextItems.Add(new TextItem
                         {
                             Content = string.Format("<p class=\"{2}\"><a href=\"#H{1}\">{0}</a></p>\r\n",
-                            ti.Content, row+_rowCount+1,
+                            ti.Content, row + _rowCount + 1,
                             CssToc4),
                             LogicalType = TextItemType.Plain
                         });
@@ -303,7 +303,7 @@ namespace Bodoconsult.Core.Text.Formatter
         private string GetBody(IList<ITextItem> body)
         {
             var erg = new StringBuilder();
-            var count = body.Count-1;
+            var count = body.Count - 1;
 
             var codeClass = string.IsNullOrEmpty(CssCode) ? "" : $" class=\"{CssCode}\"";
 
@@ -331,7 +331,7 @@ namespace Bodoconsult.Core.Text.Formatter
                     case TextItemType.H1:
 
                         id = AddTableOfContent && TocLevel > 0 ? $"id=\"H{row}\"" : "";
-                        erg.AppendFormat("<h{2:0} {1}{3}>{0}</h{2:0}>\r\n", content, id, MoveHeaderLevel+1, className);
+                        erg.AppendFormat("<h{2:0} {1}{3}>{0}</h{2:0}>\r\n", content, id, MoveHeaderLevel + 1, className);
                         break;
                     case TextItemType.H2:
                         id = AddTableOfContent && TocLevel > 1 ? $"id=\"H{row}\"" : "";
@@ -411,13 +411,17 @@ namespace Bodoconsult.Core.Text.Formatter
 
                         break;
                     case TextItemType.Xml:
+                        if (string.IsNullOrEmpty(ti.Content)) continue;
 
+                        var c = BeautifyXml(ti.Content);
 
-                        erg.AppendFormat("<div class=\"code\"><code{0}>" + BeautifyXml(ti.Content) + "</code></div>\r\n", className);
+                        // c = "Hallo";
+
+                        erg.AppendFormat("<div class=\"code\"><code{0}>" + c + "</code></div>\r\n", className);
                         break;
                     case TextItemType.Code:
 
-                        var localCodeClass = string.IsNullOrEmpty(className) ? " "+codeClass : className;
+                        var localCodeClass = string.IsNullOrEmpty(className) ? " " + codeClass : className;
 
                         erg.Append($"<div class=\"code\"><code{localCodeClass}>" + content.Replace("??pa??", "<p>")
                                        .Replace("??pe??", "</p>")
@@ -445,7 +449,7 @@ namespace Bodoconsult.Core.Text.Formatter
         private StringBuilder GetTable(TableTextItem ti)
         {
 
-            
+
             var data = new DataTable();
 
             using (var stream = new MemoryStream())
@@ -475,16 +479,16 @@ namespace Bodoconsult.Core.Text.Formatter
 
                 css = CssThLeft;
 
-                var dt = col.DataType.ToString().ToLower().Replace("system.","");
+                var dt = col.DataType.ToString().ToLower().Replace("system.", "");
 
                 switch (dt)
                 {
                     case "boolean":
                         css = CssThCenter;
-                        s =col.ColumnName;
+                        s = col.ColumnName;
                         break;
                     case "char":
-                         s =col.ColumnName;
+                        s = col.ColumnName;
                         break;
                     //case "sbyte":
 
@@ -493,12 +497,12 @@ namespace Bodoconsult.Core.Text.Formatter
                     case "double":
                     case "single":
                         css = CssThRight;
-                         s =col.ColumnName;
+                        s = col.ColumnName;
                         break;
                     case "datetime":
                     case "timespan":
                         css = CssThCenter;
-                         s =col.ColumnName;
+                        s = col.ColumnName;
                         break;
 
                     case "byte":
@@ -509,14 +513,14 @@ namespace Bodoconsult.Core.Text.Formatter
                     case "uint32":
                     case "uint64":
                         css = CssThRight;
-                         s =col.ColumnName;
+                        s = col.ColumnName;
                         break;
                     default:
-                         s =col.ColumnName;
+                        s = col.ColumnName;
                         break;
                 }
 
-                erg.AppendFormat("<th class=\"{1}\">{0}</th>\r\n", s,  css);
+                erg.AppendFormat("<th class=\"{1}\">{0}</th>\r\n", s, css);
             }
             erg.Append("</tr>\r\n");
 
@@ -539,10 +543,10 @@ namespace Bodoconsult.Core.Text.Formatter
                     {
                         case "boolean":
                             css = alternateRow ? CssTdCenterAlt : CssTdCenter;
-                            s =row[col.ColumnName].ToString();
+                            s = row[col.ColumnName].ToString();
                             break;
                         case "char":
-                            s =col.ColumnName;
+                            s = col.ColumnName;
                             break;
                         //case "sbyte":
 
@@ -574,7 +578,7 @@ namespace Bodoconsult.Core.Text.Formatter
                             break;
                         default:
 
-                            s =row[col.ColumnName].ToString();
+                            s = row[col.ColumnName].ToString();
                             break;
                     }
 
@@ -610,7 +614,7 @@ namespace Bodoconsult.Core.Text.Formatter
                     doc.Save(writer);
                 }
 
-                var html = System.Net.WebUtility.HtmlEncode(sb.ToString()).Replace("\r\n", "<br />").Replace("\t", "&nbsp;&nbsp;&nbsp;");
+                var html = System.Net.WebUtility.HtmlEncode(sb.ToString()).Replace("\r\n", "<br />").Replace("\t", "&nbsp;&nbsp;&nbsp;").Replace("{", "{{").Replace("}", "}}");
 
                 return html;
             }

@@ -7,16 +7,22 @@
     <RepositoryUrl>https://github.com/RobertLeisner/Bodoconsult.Core.Text</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageId>Bodoconsult.Core.Text</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.3</Version>
     <Authors>Robert Leisner</Authors>
     <Company>Bodoconsult EDV-Dienstleistungen GmbH</Company>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Output structured text HTML plain text ascii</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Simple class for collecting structured text in an app and export it to HTML or an ASCII plain text file. Use library to create simple reports from apps or from unit testing i.e. for auditors or as documentation.</Description>
-    <PackageReleaseNotes>Minor bugfixes</PackageReleaseNotes>
+    <PackageReleaseNotes>Test project migrtated to .NET 6</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/RobertLeisner/Bodoconsult.Core.Text</PackageProjectUrl>
     <NeutralLanguage>en</NeutralLanguage>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE.md" Link="LICENSE.md" />
+		<None Include="..\README.md" Link="README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
 </Project>
